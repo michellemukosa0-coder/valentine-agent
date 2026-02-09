@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Michelle's Valentine AI 💌</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #ffe6f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px;
+    }
+    h1 { color: #ff4d94; }
+    #chatbox {
+      width: 300px;
+      height: 400px;
+      border: 2px solid #ff4d94;
+      border-radius: 10px;
+      padding: 10px;
+      overflow-y: auto;
+      background: #fff;
+      margin-bottom: 10px;
+    }
+    input {
+      width: 200px;
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid #ff4d94;
+    }
+    button {
+      padding: 5px 10px;
+      border: none;
+      background: #ff4d94;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .message {
+      margin: 5px 0;
+    }
+    .user { color: #333; text-align: right; }
+    .ai { color: #ff4d94; text-align: left; }
+  </style>
+</head>
+<body>
+  <h1>Michelle's Valentine AI 💌</h1>
+  <div id="chatbox"></div>
+  <input type="text" id="userInput" placeholder="Type your message..." />
+  <button onclick="sendMessage()">Send</button>
+
+  <script>
+    const chatbox = document.getElementById('chatbox');
+
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const message = input.value.trim();
+      if (message === '') return;
+
+      // Show user message
+      const userMsg = document.createElement('div');
+      userMsg.className = 'message user';
+      userMsg.textContent = message;
+      chatbox.appendChild(userMsg);
+
+      input.value = '';
+
+      // AI response
+      const aiMsg = document.createElement('div');
+      aiMsg.className = 'message ai';
+      
+      // Simple fun responses
+      if (message.toLowerCase().includes('love')) {
+        aiMsg.textContent = "💖 I love you too!";
+      } else if (message.toLowerCase().includes('hug')) {
+        aiMsg.textContent = "🤗 Sending you a big virtual hug!";
+      } else if (message.toLowerCase().includes('valentine')) {
+        aiMsg.textContent = "🌹 Happy Valentine’s Day!";
+      } else {
+        aiMsg.textContent = "💌 You make my circuits flutter!";
+      }
+
+      chatbox.appendChild(aiMsg);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+  </script>
+</body>
+</html>
