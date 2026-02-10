@@ -29,7 +29,7 @@
     .ai { text-align: left; color: #ff4d94; margin: 5px; }
 
     input {
-      width: 65%;
+      width: 60%;
       padding: 8px;
       border-radius: 5px;
       border: 1px solid #ff4d94;
@@ -37,11 +37,15 @@
 
     button {
       padding: 8px 12px;
+      margin: 3px;
       background: #ff4d94;
       color: white;
       border: none;
       border-radius: 5px;
+      cursor: pointer;
     }
+
+    .option-buttons { margin-top: 10px; }
   </style>
 </head>
 <body>
@@ -53,35 +57,68 @@
 <input type="text" id="userInput" placeholder="Type something sweet..." />
 <button onclick="sendMessage()">Send</button>
 
+<div id="options" class="option-buttons"></div>
+
 <script>
+const chatbox = document.getElementById("chatbox");
+const optionsDiv = document.getElementById("options");
+
 function sendMessage() {
   const input = document.getElementById("userInput");
-  const chatbox = document.getElementById("chatbox");
   const message = input.value.trim();
   if (!message) return;
 
-  const userMsg = document.createElement("div");
-  userMsg.className = "user";
-  userMsg.textContent = message;
-  chatbox.appendChild(userMsg);
-
+  addMessage(message, "user");
   input.value = "";
 
-  const aiMsg = document.createElement("div");
-  aiMsg.className = "ai";
+  // Clear previous buttons
+  optionsDiv.innerHTML = "";
 
-  const text = message.toLowerCase();
-  if (text.includes("love")) aiMsg.textContent = "💖 I love you more!";
-  else if (text.includes("miss")) aiMsg.textContent = "🥺 I miss you every second!";
-  else if (text.includes("hug")) aiMsg.textContent = "🤗 Sending the biggest hug!";
-  else if (text.includes("kiss")) aiMsg.textContent = "😘 Mwah! Right back at you!";
-  else aiMsg.textContent = "💌 You're my favorite person ever.";
+  const lowerMsg = message.toLowerCase();
 
-  chatbox.appendChild(aiMsg);
+  if (lowerMsg.includes("valentine")) {
+    showValentineOptions();
+  } else if (lowerMsg.includes("love")) {
+    addMessage("💖 I love you more than chocolate!", "ai");
+  } else if (lowerMsg.includes("miss")) {
+    addMessage("🥺 I miss you every second!", "ai");
+  } else if (lowerMsg.includes("hug")) {
+    addMessage("🤗 Sending the biggest hug!", "ai");
+  } else if (lowerMsg.includes("kiss")) {
+    addMessage("😘 Mwah! Right back at you!", "ai");
+  } else {
+    addMessage("💌 You're my favorite person ever.", "ai");
+  }
+}
+
+function addMessage(text, sender) {
+  const msgDiv = document.createElement("div");
+  msgDiv.className = sender;
+  msgDiv.textContent = text;
+  chatbox.appendChild(msgDiv);
   chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+function showValentineOptions() {
+  const choices = [
+    { text: "Yes 💘", response: "💖 Yay! I’m so happy! 💘" },
+    { text: "Of course 😘", response: "🥰 You make my heart skip a beat!" },
+    { text: "I’d be honored 🌹", response: "🌹 Being yours is my favorite thing!" }
+  ];
+
+  choices.forEach(choice => {
+    const btn = document.createElement("button");
+    btn.textContent = choice.text;
+    btn.onclick = () => {
+      addMessage(choice.text, "user");
+      addMessage(choice.response, "ai");
+      optionsDiv.innerHTML = ""; // remove buttons after choice
+    };
+    optionsDiv.appendChild(btn);
+  });
 }
 </script>
 
 </body>
 </html>
-Fix chat layout
+Add valentine buttons 
